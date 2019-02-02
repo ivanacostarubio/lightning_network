@@ -13,7 +13,7 @@ module Lnd
 
   def certificate
     # TODO: READ CERTIFICATE FROM ENV
-    File.read(File.expand_path("./tls.cert"))
+    File.read(File.expand_path(ENV['lnd_cert']))
   end
 
   def credentials
@@ -22,7 +22,7 @@ module Lnd
 
   def macaroon_binary
     # TODO: READ  MACA FROM ENV
-    File.read(File.expand_path("./admin.macaroon"))
+    File.read(File.expand_path(ENV['lnd_macaroon']))
   end
 
   def macaroon
@@ -31,7 +31,7 @@ module Lnd
 
   def stub
     # TODO: READ THE NODE URL FROM ENV
-    Lnrpc::Lightning::Stub.new('lndnode:10009',
+    Lnrpc::Lightning::Stub.new(ENV['lnd_host'],
                                credentials,
                                interceptors: [MacaroonInterceptor.new(macaroon)])
   end
